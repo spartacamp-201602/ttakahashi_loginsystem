@@ -54,19 +54,19 @@ if($_SERVER['REQUEST_METHOD']==='POST')
     {
         if($name === $edit_user['name'])
         {
-            break; //
+            break; //元の名前と同じときは編集できる
         }
 
         if($name === $user['name'])
         {
             $errors[] ='すでにこのユーザネームは使われています';
-            break;
+            break;//すでに登録されてる名前には編集できない
         }
     }
 
 
 
-
+//バリデーション突破
     if(empty($errors))
     {
 

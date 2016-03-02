@@ -20,6 +20,24 @@ if($_SERVER['REQUEST_METHOD']==='POST')
         $errors[] = 'パスワードが未入力です';
     }
 
+// 名前が重複するときエラー文を表示
+    $dbh = connectDatabase();
+    $sql ='select * from users';
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($users);
+
+    foreach ($users as $user)
+    {
+        if($name === $user['name'])
+        {
+            $errors[] ='すでにこのユーザネームは使われています';
+            break;//すでに登録されてる名前には編集できない
+        }
+    }
+
 
     if(empty($errors))
     {
